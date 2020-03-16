@@ -65,7 +65,7 @@
 		7DAE9146241F21F800C41EDF /* EnumInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnumInfo.m; sourceTree = "<group>"; };
 		7DAE9148241F3A0E00C41EDF /* EnumGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnumGenerator.h; sourceTree = "<group>"; };
 		7DAE9149241F3A0E00C41EDF /* EnumGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnumGenerator.m; sourceTree = "<group>"; };
-		7DAE914B241F78D600C41EDF /* JCS_Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JCS_Defines.h; path = "../../../../项目相关文件/JCS_Defines.h"; sourceTree = "<group>"; };
+		7DAE914C241F808F00C41EDF /* JCS_Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCS_Defines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,9 +163,9 @@
 		7DA26946241C718300C1653C /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7DAE914C241F808F00C41EDF /* JCS_Defines.h */,
 				7DA26947241C718D00C1653C /* Common.h */,
 				7DA26948241C718D00C1653C /* Common.m */,
-				7DAE914B241F78D600C41EDF /* JCS_Defines.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
