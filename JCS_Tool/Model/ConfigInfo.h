@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 前缀 **/
 @property (nonatomic, copy) NSString *prefix;
+/** 接口响应接受类 **/
+@property (nonatomic, copy) NSString *responseModel;
 
 @end
 

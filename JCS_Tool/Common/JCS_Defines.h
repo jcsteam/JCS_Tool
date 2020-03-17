@@ -21,4 +21,7 @@
 
 #define kEnumRegex @"enum(?:\\s*)(\\S*)(?:\\s*)\\{([\\s\\S]*?)\\}(?:\\s*?)"
 #define kEnumPropertyRegex @"(?:\\s+)(\\S*)(?:\\s*)=(?:\\s*)([\\s\\S]*)(?:\\s*),([\\s\\S]*)"
+
+#define kRequestRegex @"request(?:\\s+)(post|get)(?:\\s+)(\\S*)(?:\\s+)(\\S*)(?:\\s+)(\\S*)(?:\\s+)\\{([\\s\\S]*?)\\}(?:[\\s\\S]*?)"
+
 #endif /* JCS_Defines_h */

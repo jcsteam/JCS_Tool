@@ -14,7 +14,7 @@
 @implementation EnumGenerator
 
 /// 拼接模型文件
-+ (void)generateEnum:(NSArray*)enums config:(ConfigInfo*)config stringBuilder:(NSMutableString*)stringBuilder {
++ (void)generateEnums:(NSArray*)enums config:(ConfigInfo*)config stringBuilder:(NSMutableString*)stringBuilder {
     
     if(!(enums && enums.count > 0)){
         return;

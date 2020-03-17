@@ -8,14 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "RegexKitLite.h"
-
-#import "ConfigParser.h"
-#import "MessageParser.h"
-#import "EnumParser.h"
 #import "CommentParser.h"
+#import "ConfigParser.h"
 
 #import "ModelGenerator.h"
-#import "EnumGenerator.h"
+#import "RequestGenerator.h"
 
 #import "Category.h"
 #import "Common.h"
@@ -36,29 +33,10 @@ int main(int argc, const char * argv[]) {
         //配置信息
         ConfigInfo *configInfo = [ConfigParser parseConfigInfo:sourcePath];
         
-        NSMutableString *stringBuilderH = nil; //Model H String
-        NSMutableString *stringBuilderM = nil; //Model M String
-        NSString *filenameH = nil;
-        NSString *filenameM = nil;
-        
-        //枚举
-        NSArray *enums = [EnumParser parseEnumMap:source configInfo:configInfo];
-        
-        //模型
-        {
-            NSArray *models = [MessageParser parseModelMap:source configInfo:configInfo];
-            stringBuilderH = [NSMutableString string];
-            stringBuilderM = [NSMutableString string];
-            filenameH = [NSString stringWithFormat:@"%@Model.h",configInfo.prefix];
-            filenameM = [NSString stringWithFormat:@"%@Model.m",configInfo.prefix];
-            //生成文件
-            [ModelGenerator generateModelH:models enumMap:enums config:configInfo filename:(NSString*)filenameH stringBuilder:stringBuilderH];
-            [ModelGenerator generateModelM:models config:configInfo  filenameH:(NSString*)filenameH filenameM:(NSString*)filenameM stringBuilder:stringBuilderM];
-        }
-        //写入文件
-        [Common writeToFile:filenameH outputPath:outputPath content:stringBuilderH];
-        [Common writeToFile:filenameM outputPath:outputPath content:stringBuilderM];
-        
+        //生成模型
+        [ModelGenerator generateModels:source configInfo:configInfo outputPath:outputPath];
+        //生成Request
+        [RequestGenerator generateRequests:source configInfo:configInfo outputPath:outputPath];
     }
     return 0;
 }

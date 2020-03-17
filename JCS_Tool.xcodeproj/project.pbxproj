@@ -20,6 +20,9 @@
 		7DAE9144241F207A00C41EDF /* EnumParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE9143241F207A00C41EDF /* EnumParser.m */; };
 		7DAE9147241F21F800C41EDF /* EnumInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE9146241F21F800C41EDF /* EnumInfo.m */; };
 		7DAE914A241F3A0E00C41EDF /* EnumGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE9149241F3A0E00C41EDF /* EnumGenerator.m */; };
+		7DAE914F241F9A5200C41EDF /* RequestParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE914E241F9A5200C41EDF /* RequestParser.m */; };
+		7DAE9152241F9A7200C41EDF /* RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE9151241F9A7200C41EDF /* RequestInfo.m */; };
+		7DAE915524205F7600C41EDF /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE915424205F7600C41EDF /* RequestGenerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,6 +69,12 @@
 		7DAE9148241F3A0E00C41EDF /* EnumGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnumGenerator.h; sourceTree = "<group>"; };
 		7DAE9149241F3A0E00C41EDF /* EnumGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnumGenerator.m; sourceTree = "<group>"; };
 		7DAE914C241F808F00C41EDF /* JCS_Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCS_Defines.h; sourceTree = "<group>"; };
+		7DAE914D241F9A5200C41EDF /* RequestParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestParser.h; sourceTree = "<group>"; };
+		7DAE914E241F9A5200C41EDF /* RequestParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestParser.m; sourceTree = "<group>"; };
+		7DAE9150241F9A7200C41EDF /* RequestInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestInfo.h; sourceTree = "<group>"; };
+		7DAE9151241F9A7200C41EDF /* RequestInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestInfo.m; sourceTree = "<group>"; };
+		7DAE915324205F7600C41EDF /* RequestGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestGenerator.h; sourceTree = "<group>"; };
+		7DAE915424205F7600C41EDF /* RequestGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestGenerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +141,8 @@
 				7DAE9143241F207A00C41EDF /* EnumParser.m */,
 				7DA26926241BA2A100C1653C /* MessageParser.h */,
 				7DA26927241BA2A100C1653C /* MessageParser.m */,
+				7DAE914D241F9A5200C41EDF /* RequestParser.h */,
+				7DAE914E241F9A5200C41EDF /* RequestParser.m */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -145,6 +156,8 @@
 				7DA26934241BC30F00C1653C /* ConfigInfo.m */,
 				7DAE9145241F21F800C41EDF /* EnumInfo.h */,
 				7DAE9146241F21F800C41EDF /* EnumInfo.m */,
+				7DAE9150241F9A7200C41EDF /* RequestInfo.h */,
+				7DAE9151241F9A7200C41EDF /* RequestInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,6 +169,8 @@
 				7DA26938241BC3A100C1653C /* ModelGenerator.m */,
 				7DAE9148241F3A0E00C41EDF /* EnumGenerator.h */,
 				7DAE9149241F3A0E00C41EDF /* EnumGenerator.m */,
+				7DAE915324205F7600C41EDF /* RequestGenerator.h */,
+				7DAE915424205F7600C41EDF /* RequestGenerator.m */,
 			);
 			path = Generator;
 			sourceTree = "<group>";
@@ -237,9 +252,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DAE914F241F9A5200C41EDF /* RequestParser.m in Sources */,
 				7DA2691E241B8F9000C1653C /* RegexKitLite.m in Sources */,
 				7DA26916241B8F5000C1653C /* main.m in Sources */,
 				7DAE913B241F0CB100C41EDF /* CommentParser.m in Sources */,
+				7DAE9152241F9A7200C41EDF /* RequestInfo.m in Sources */,
 				7DA26939241BC3A100C1653C /* ModelGenerator.m in Sources */,
 				7DAE9144241F207A00C41EDF /* EnumParser.m in Sources */,
 				7DA2692F241BA45F00C1653C /* MessageInfo.m in Sources */,
@@ -248,6 +265,7 @@
 				7DA26928241BA2A100C1653C /* MessageParser.m in Sources */,
 				7DAE913F241F139400C41EDF /* NSString+JCS_Extension.m in Sources */,
 				7DAE9147241F21F800C41EDF /* EnumInfo.m in Sources */,
+				7DAE915524205F7600C41EDF /* RequestGenerator.m in Sources */,
 				7DAE914A241F3A0E00C41EDF /* EnumGenerator.m in Sources */,
 				7DA26935241BC30F00C1653C /* ConfigInfo.m in Sources */,
 			);

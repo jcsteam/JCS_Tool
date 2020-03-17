@@ -26,6 +26,7 @@
         NSDictionary *result = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
         if(result){
             configInfo.prefix = [result valueForKey:@"prefix"];
+            configInfo.responseModel = [result valueForKey:@"responseModel"];
         }
     }
     

@@ -15,15 +15,36 @@
 
 #import "EnumGenerator.h"
 
-static NSDictionary *_propertyTypeMap = nil;
-
 @interface ModelGenerator()
 
 @end
 
 @implementation ModelGenerator
 
-+ (void)generateModelH:(NSArray*)models
++ (void)generateModels:(NSString*)source configInfo:(ConfigInfo*)configInfo outputPath:(NSString*)outputPath {
+
+    NSMutableString *stringBuilderH = [NSMutableString string]; //Model H String
+    NSMutableString *stringBuilderM = [NSMutableString string]; //Model M String
+    NSString *filenameH = [NSString stringWithFormat:@"%@Model.h",configInfo.prefix];
+    NSString *filenameM = [NSString stringWithFormat:@"%@Model.m",configInfo.prefix];
+    
+    //枚举
+    NSArray *enums = [EnumParser parseEnumMap:source configInfo:configInfo];
+    //模型
+    NSArray *models = [MessageParser parseModelMap:source configInfo:configInfo];
+    if((!models || models.count == 0) && (!enums || enums.count == 0)){
+        return;
+    }
+    //生成文件
+    [ModelGenerator generateContentH:models enumMap:enums config:configInfo filename:(NSString*)filenameH stringBuilder:stringBuilderH];
+    [ModelGenerator generateContentM:models config:configInfo  filenameH:(NSString*)filenameH filenameM:(NSString*)filenameM stringBuilder:stringBuilderM];
+    
+    //写入文件
+    [Common writeToFile:filenameH outputPath:outputPath content:stringBuilderH];
+    [Common writeToFile:filenameM outputPath:outputPath content:stringBuilderM];
+}
+
++ (void)generateContentH:(NSArray*)models
                 enumMap:(NSArray*)enums
                 config:(ConfigInfo*)config
                 filename:(NSString*)filename
@@ -40,7 +61,7 @@ static NSDictionary *_propertyTypeMap = nil;
     //枚举
     if(enums.count > 0){
         [stringBuilder appendString:@"\n\n"];
-        [EnumGenerator generateEnum:enums config:config stringBuilder:stringBuilder];
+        [EnumGenerator generateEnums:enums config:config stringBuilder:stringBuilder];
     }
     //body
     [stringBuilder appendString:@"\n\n"];
@@ -75,7 +96,7 @@ static NSDictionary *_propertyTypeMap = nil;
 //                [stringBuilder appendFormat:@"@property (nonatomic, %@) %@<%@,%@> *%@;\n",modifierString,type,limitTypeString1,limitTypeString2,property.name];
 //            }
 //        } else {
-        NSString *typeString = [self typeComponent:property.type];
+        NSString *typeString = [Common typeComponent:property.type];
         if(!typeString.jcs_isValid){ //propertyTypeMap未匹配，则为引用类型
             if(property.isMessage){ //是否是message类型
                 typeString = [NSString stringWithFormat:@"%@ *",property.type];
@@ -93,7 +114,7 @@ static NSDictionary *_propertyTypeMap = nil;
     
 }
 
-+ (void)generateModelM:(NSArray*)models
++ (void)generateContentM:(NSArray*)models
                 config:(ConfigInfo*)config
                   filenameH:(NSString*)filenameH filenameM:(NSString*)filenameM
          stringBuilder:(NSMutableString*)stringBuilder {
@@ -131,25 +152,10 @@ static NSDictionary *_propertyTypeMap = nil;
 
 }
 
-/// 获取类型部分字符串
-+ (NSString *)typeComponent:(NSString*)typeString {
-    NSString *type = [[self propertyTypeMap] valueForKey:typeString];
-    if([type isEqualToString:@"NSString"]) { return @"NSString *";}
-    if([type isEqualToString:@"NSMutableString"]) { return @"NSMutableString *";}
-    else if([type isEqualToString:@"NSArray"]) { return @"NSArray *";}
-    else if([type isEqualToString:@"NSMutableArray"]) { return @"NSMutableArray *";}
-    else if([type isEqualToString:@"NSArray"]) { return @"NSArray *";}
-    else if([type isEqualToString:@"NSMutableDictionary"]) { return @"NSMutableDictionary *";}
-    else if([type isEqualToString:@"NSInteger"]) { return @"NSInteger ";}
-    else if([type isEqualToString:@"CGFloat"]) { return @"CGFloat ";}
-    else if([type isEqualToString:@"double"]) { return @"double ";}
-    else if([type isEqualToString:@"BOOL"]) { return @"BOOL ";}
-    else if([type isEqualToString:@"double"]) { return @"double ";}
-    return @"";
-}
+
 /// 修复符
 + (NSString*)modifierString:(NSString*)typeString {
-    NSString *type = [[self propertyTypeMap] valueForKey:typeString];
+    NSString *type = [[Common propertyTypeMap] valueForKey:typeString];
     if([type isEqualToString:@"NSString"]) { return @"copy";}
     else if([type isEqualToString:@"NSMutableArray"]) { return @"strong";}
     else if([type isEqualToString:@"NSMutableDictionary"]) { return @"strong";}
@@ -160,24 +166,6 @@ static NSDictionary *_propertyTypeMap = nil;
     else if([type isEqualToString:@"double"]) { return @"assign";}
     return @"strong";
 }
-///propertyTypeMap
-+ (NSDictionary*)propertyTypeMap {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _propertyTypeMap = @{
-            @"string":@"NSString",
-            @"int":@"NSInteger",
-            @"long":@"NSInteger",
-            @"float":@"CGFloat",
-            @"double":@"double",
-            @"bool":@"BOOL",
-            @"list":@"NSMutableArray",
-            @"mlist":@"NSMutableArray",
-            @"dict":@"NSMutableDictionary",
-            @"mdict":@"NSMutableDictionary",
-        };
-    });
-    return _propertyTypeMap;
-}
+
 
 @end

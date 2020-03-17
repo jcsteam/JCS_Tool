@@ -1,5 +1,5 @@
 //
-//  EnumGenerator.h
+//  RequestParser.h
 //  JCS_Tool
 //
 //  Created by 永平 on 2020/3/16.
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EnumGenerator : NSObject
+@interface RequestParser : NSObject
 
-+ (void)generateEnums:(NSArray*)enums config:(ConfigInfo*)config stringBuilder:(NSMutableString*)stringBuilder;
++ (NSArray*)parseRequest:(NSString*)sourceContent configInfo:(ConfigInfo*)configInfo;
 
 @end
 

@@ -1,5 +1,6 @@
 Config{
-    "prefix":"JC2_"
+    "prefix":"JC2_",
+    "responseModel":"CommonResponse"
 }
 message Person {
     desc Person 第一行 注释
@@ -32,4 +33,16 @@ enum CarType {
     desc Sex 第三行 注释
     bwm = 1, //aaaa
     bieke = 2, //ddddd
+}
+request post getUserInfo list<Person> /getUserInfo.action {
+    desc 获取用户信息接口
+}
+request get getBannerList Student2 /getBannerList.action {
+    desc 获取用户信息接口2
+}
+request get getBannerList2 dict /getBannerList.action {
+    desc 获取用户信息接口3
+}
+request get getBannerList3 nil /getBannerList.action {
+    desc 获取用户信息接4
 }

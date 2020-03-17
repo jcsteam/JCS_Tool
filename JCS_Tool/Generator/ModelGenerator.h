@@ -13,17 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ModelGenerator : NSObject
 
-+ (void)generateModelH:(NSArray*)models
-               enumMap:(NSArray*)enums
-       config:(ConfigInfo*)config
-     filename:(NSString*)filename
-         stringBuilder:(NSMutableString*)stringBuilder;
-
-+ (void)generateModelM:(NSArray*)models
-       config:(ConfigInfo*)config
-         filenameH:(NSString*)filenameH
-             filenameM:(NSString*)filenameM
-         stringBuilder:(NSMutableString*)stringBuilder;
++ (void)generateModels:(NSString*)source configInfo:(ConfigInfo*)configInfo outputPath:(NSString*)outputPath;
 
 @end
 

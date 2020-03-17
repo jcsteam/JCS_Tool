@@ -38,9 +38,10 @@ static NSMutableDictionary *_enumPropertiesMap = nil;
         if(model.name && model.name.length > 0){
             [enums addObject:model];
             _enumNameMap[oriName] = model.name;
+            //属性
+            [self parseProperties:item[2] model:model configInfo:configInfo];
         }
-        //属性
-        [self parseProperties:item[2] model:model configInfo:configInfo];
+        
     }
     return enums;
 }
