@@ -8,8 +8,10 @@
 
 #import "RequestParser.h"
 #import "RegexKitLite.h"
+#import "Common.h"
 #import "Category.h"
 #import "RequestInfo.h"
+#import "MessageParser.h"
 
 #import "JCS_Defines.h"
 
@@ -27,7 +29,38 @@
         RequestInfo *request = [[RequestInfo alloc] init];
         request.method = items[1];
         request.name = items[2];
-        request.dataClass = items[3];
+        
+        NSString *dataClass = items[3];
+        if([dataClass containsString:@"<"] && [dataClass containsString:@">"]){
+            NSInteger start = [dataClass rangeOfString:@"<"].location;
+            NSInteger end = [dataClass rangeOfString:@">"].location;
+            request.limitClass = [dataClass substringWithRange:NSMakeRange(start+1, end - start-1)];
+            request.dataClass = [dataClass substringToIndex:start];
+        }else{
+            request.dataClass = dataClass;
+        }
+        
+        //dataClass
+        if([MessageParser propertyIsMessage:request.dataClass]){
+            request.dataClass = [MessageParser transPropertyType:request.dataClass];
+        } else if([[Common propertyTypeMap] valueForKey:request.dataClass]){
+            request.dataClass = [[Common propertyTypeMap] valueForKey:request.dataClass];
+            if([request.dataClass isEqualToString:@"NSMutableArray"]){
+                request.dataClass = @"NSArray";
+            } else if([request.dataClass isEqualToString:@"NSMutableDictionary"]){
+                request.dataClass = @"NSDictionary";
+            }
+        } else if([Common typeIsDictionary:request.dataClass]){
+            request.dataClass = @"NSDictionary";
+        }
+        
+        //泛型类型
+        if([MessageParser propertyIsMessage:request.limitClass]){
+            request.limitClass = [MessageParser transPropertyType:request.limitClass];
+        } else if([[Common propertyTypeMap] valueForKey:request.limitClass]){
+            request.limitClass = [[Common propertyTypeMap] valueForKey:request.limitClass];
+        }
+        
         request.url = items[4];
         if(request.name.jcs_isValid){
             [requests addObject:request];
@@ -36,7 +69,6 @@
     }
     return requests;
 }
-
 
 + (void)parseProperties:(NSString*)content model:(RequestInfo*)model configInfo:(ConfigInfo*)configInfo{
     if(!content.jcs_isValid){

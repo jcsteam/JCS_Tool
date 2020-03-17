@@ -191,11 +191,16 @@ static NSMutableDictionary *_messageNameMap = nil;
 
 /// 属性是否是Message类型
 + (BOOL)propertyIsMessage:(NSString*)type{
-    return [_messageNameMap.allKeys containsObject:type];
+    return [_messageNameMap.allKeys containsObject:type] || [_messageNameMap.allValues containsObject:type];
 }
 /// 转换属性类型 "Person -> JCS_Person"
 + (NSString*)transPropertyType:(NSString*)type {
-    return [_messageNameMap valueForKey:type];
+    for (NSString *key in _messageNameMap) {
+        if([key isEqualToString:type] || [_messageNameMap[key] isEqualToString:type]){
+            return _messageNameMap[key];
+        }
+    }
+    return nil;
 }
 
 @end

@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *prefix;
 /** 接口响应接受类 **/
 @property (nonatomic, copy) NSString *responseModel;
+/** 是否生成返回值是RACSignal的接口请求 **/
+@property (nonatomic, assign) BOOL signalRequest;
+
 
 @end
 

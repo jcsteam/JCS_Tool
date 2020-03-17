@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 写入文件
 + (void)writeToFile:(NSString*)filename outputPath:(NSString*)outputPath content:(NSString*)content;
 
+/// 类型是否是字典
++ (BOOL)typeIsDictionary:(NSString*)type;
+/// 类型是否是数字
++ (BOOL)typeIsArray:(NSString*)type;
+
 /// 获取类型部分字符串
 + (NSString *)typeComponent:(NSString*)typeString;
 ///propertyTypeMap

@@ -25,8 +25,12 @@
         NSError *error = nil;
         NSDictionary *result = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
         if(result){
+            //前缀
             configInfo.prefix = [result valueForKey:@"prefix"];
+            //接口返回值解析类型
             configInfo.responseModel = [result valueForKey:@"responseModel"];
+            //是否生成返回值是RACSignal的接口请求
+            configInfo.signalRequest = [[result valueForKey:@"signalRequest"] boolValue];
         }
     }
     

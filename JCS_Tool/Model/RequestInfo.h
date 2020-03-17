@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *comment;
 /** <#备注#> **/
 @property (nonatomic, copy) NSString *dataClass;
+/** 泛型类型 **/
+@property (nonatomic, copy) NSString *limitClass;
 /** <#备注#> **/
 @property (nonatomic, copy) NSString *url;
 

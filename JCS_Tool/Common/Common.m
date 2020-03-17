@@ -47,6 +47,15 @@
     }
 }
 
+/// 类型是否是字典
++ (BOOL)typeIsDictionary:(NSString*)type {
+    return !type.jcs_isValid || [type isEqualToString:@"dict"] || [type isEqualToString:@"mdict"] || [type isEqualToString:@"nil"] || [type isEqualToString:@"null"];
+}
+/// 类型是否是数字
++ (BOOL)typeIsArray:(NSString*)type {
+    return [type isEqualToString:@"list"] || [type isEqualToString:@"mlist"];
+}
+
 /// 获取类型部分字符串
 + (NSString *)typeComponent:(NSString*)typeString {
     NSString *type = [[self propertyTypeMap] valueForKey:typeString];
@@ -63,7 +72,6 @@
     else if([type isEqualToString:@"double"]) { return @"double ";}
     return @"";
 }
-
 ///propertyTypeMap
 + (NSDictionary*)propertyTypeMap {
     static NSDictionary *_propertyTypeMap = nil;
