@@ -50,6 +50,8 @@
     [stringBuilder appendFormat:@"@interface %@Request : NSObject\n\n",config.prefix];
     
     for (RequestInfo *request in models) {
+        printf("🍆 正在生成 接口 %s\n",[request.name cStringUsingEncoding:NSUTF8StringEncoding]);
+        
         if(request.comment.jcs_isValid){
             [stringBuilder appendString:@"/**\n"];
             [stringBuilder appendFormat:@"  %@\n",request.comment];
@@ -113,12 +115,7 @@
         [stringBuilder appendFormat:@"    } \n"];
         
         [stringBuilder appendFormat:@"    //参数预处理 \n"];
-        [stringBuilder appendFormat:@"    NSDictionary *processedParams = nil; \n"];
-        [stringBuilder appendFormat:@"    if(params && params.allKeys.count > 0) { \n"];
-        [stringBuilder appendFormat:@"        processedParams = [JCS_Request preprocessParams:params]; \n"];
-        [stringBuilder appendFormat:@"    } else { \n"];
-        [stringBuilder appendFormat:@"        processedParams = @{}; \n"];
-        [stringBuilder appendFormat:@"    } \n"];
+        [stringBuilder appendFormat:@"    NSDictionary *processedParams = [JCS_Request preprocessParams:params]; \n"];
         
         [stringBuilder appendFormat:@"    NSString *url = @\"%@\"; \n",request.url];
         [stringBuilder appendFormat:@"    [[JCS_Request sharedInstance] %@:url parameters:processedParams progress:^(NSProgress * _Nonnull uploadProgress) { \n",request.method.uppercaseString];

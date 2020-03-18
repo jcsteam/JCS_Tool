@@ -20,8 +20,9 @@
         return;
     }
     
-    //@class 声明
     for (EnumInfo *enumInfo in enums) {
+        
+        printf("🍏 正在生成 Enum %s\n",[enumInfo.name cStringUsingEncoding:NSUTF8StringEncoding]);
         //备注
         [Common messageComment:enumInfo.comment stringBuilder:stringBuilder];
         [stringBuilder appendFormat:@"typedef NS_ENUM(NSInteger, %@) { \n",[NSString stringWithFormat:@"%@",enumInfo.name]];
@@ -33,7 +34,6 @@
             }
             [stringBuilder appendFormat:@"  %@ = %@, %@ \n",property.name.jcs_catpureUpper,property.value,comment];
         }
-        
         [stringBuilder appendString:@"};\n"];
     }
 }

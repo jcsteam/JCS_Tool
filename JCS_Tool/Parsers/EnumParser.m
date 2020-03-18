@@ -41,7 +41,6 @@ static NSMutableDictionary *_enumPropertiesMap = nil;
             //属性
             [self parseProperties:item[2] model:model configInfo:configInfo];
         }
-        
     }
     return enums;
 }

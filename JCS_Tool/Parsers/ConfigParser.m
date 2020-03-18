@@ -31,9 +31,10 @@
             configInfo.responseModel = [result valueForKey:@"responseModel"];
             //是否生成返回值是RACSignal的接口请求
             configInfo.signalRequest = [[result valueForKey:@"signalRequest"] boolValue];
+            
+            printf("Config %s\n\n",[jsonString cStringUsingEncoding:NSUTF8StringEncoding]);
         }
     }
-    
     return configInfo;
 }
 

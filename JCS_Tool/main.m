@@ -17,26 +17,43 @@
 #import "Category.h"
 #import "Common.h"
 
+//表情符号
+//http://cn.piliapp.com/facebook-symbols/
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        NSString *sourcePath = @"/Users/yongping/Documents/Pod库/JCS_Tool/JCS_Tool/source.h";
-        NSString *tempOutputPath = @"/Users/yongping/Documents/Pod库/JCS_Tool/JCS_Tool/output.h";
-        NSString *outputPath = @"/Users/yongping/Documents/Pod库/JCS_Test/JCS_Test";
+        if(!argv[1]){
+            printf("sourcePath 必传\n");
+            return 0;
+        }
         
+        NSString *sourceFile = @(argv[1]);
+        if(![[NSFileManager defaultManager] fileExistsAtPath:sourceFile]) {
+            printf("%s 文件不存在\n",argv[1]);
+        }
+        
+        NSString *outputPath = [sourceFile stringByDeletingLastPathComponent];
+        NSString *preprocessFile = [outputPath stringByAppendingPathComponent:@"preprocess.h"];
+
         //解析之前，先删除(整行注释、空行、*号注释)
-        NSString *source = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
+        NSString *source = [NSString stringWithContentsOfFile:sourceFile encoding:NSUTF8StringEncoding error:nil];
+        
+        printf("\n🔨 开始预处理source\n");
         source = [CommentParser preprocessSourceContent:source];
         //预处理后的内容写入临时文件，调试使用
-        [source writeToFile:tempOutputPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        
+        [source writeToFile:preprocessFile atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        printf("🔨 预处理source完成,已存放至preprocess.h\n\n");
+
         //配置信息
-        ConfigInfo *configInfo = [ConfigParser parseConfigInfo:sourcePath];
-        
+        ConfigInfo *configInfo = [ConfigParser parseConfigInfo:sourceFile];
+
         //生成模型
         [ModelGenerator generateModels:source configInfo:configInfo outputPath:outputPath];
         //生成Request
         [RequestGenerator generateRequests:source configInfo:configInfo outputPath:outputPath];
+        
+        printf("\n 🎉🎉🎉 生成完毕 🎉🎉🎉 \n");
     }
     return 0;
 }

@@ -66,6 +66,7 @@
     //body
     [stringBuilder appendString:@"\n\n"];
     for (MessageInfo *message in models) {
+        printf("🍇 正在生成 Model %s\n",[message.name cStringUsingEncoding:NSUTF8StringEncoding]);
         [self generateContentH:message config:config stringBuilder:stringBuilder];
     }
 }
