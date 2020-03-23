@@ -39,6 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D636E9D2428C7870040CFE4 /* source的副本.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "source的副本.h"; sourceTree = "<group>"; };
 		7DA26912241B8F5000C1653C /* JCS_Tool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JCS_Tool; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA26915241B8F5000C1653C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7DA2691C241B8F9000C1653C /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 				7DA26921241B993A00C1653C /* Lib */,
 				7DA26915241B8F5000C1653C /* main.m */,
 				7DA2691F241B8FFC00C1653C /* source.h */,
+				7D636E9D2428C7870040CFE4 /* source的副本.h */,
 				7DAE9141241F157600C41EDF /* output.h */,
 				7DAE9135241C94CA00C41EDF /* source_bak.h */,
 			);

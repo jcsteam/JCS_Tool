@@ -9,6 +9,7 @@ import.class = Dog
 //import.lib = Person/Person
 //import.lib = Student/Student.h
 
+
 //message A extends B{
 //
 //}
@@ -125,6 +126,9 @@ message GoodsTypeInfo {
     optional int id = 0;
     optional bool isDisabled = false;
     optional string title = nil;
+}
+
+message AddressInfo {
 }
 
 /// 获取商品类型列表
