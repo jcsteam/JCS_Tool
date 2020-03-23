@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ConfigParser : NSObject
 
-+ (ConfigInfo*)parseConfigInfo:(NSString*)sourcePath;
++ (ConfigInfo*)parseConfigInfo:(NSString*)sourceString;
 
 @end
 

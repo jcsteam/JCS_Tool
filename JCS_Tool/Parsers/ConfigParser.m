@@ -13,8 +13,7 @@
 
 @implementation ConfigParser
 
-+ (ConfigInfo*)parseConfigInfo:(NSString*)sourcePath {
-    NSString *sourceString = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
++ (ConfigInfo*)parseConfigInfo:(NSString*)sourceString {
     
     ConfigInfo *configInfo = [[ConfigInfo alloc] init];
     

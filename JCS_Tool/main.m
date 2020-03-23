@@ -10,6 +10,7 @@
 #import "RegexKitLite.h"
 #import "CommentParser.h"
 #import "ConfigParser.h"
+#import "ImportParser.h"
 
 #import "ModelGenerator.h"
 #import "RequestGenerator.h"
@@ -23,12 +24,14 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        if(!argv[1]){
-            printf("sourcePath 必传\n");
-            return 0;
-        }
+//        if(!argv[1]){
+//            printf("sourcePath 必传\n");
+//            return 0;
+//        }
         
-        NSString *sourceFile = @(argv[1]);
+        NSString *sourceFile = @"/Users/yongping/Documents/Pod库/JCS_Tool/JCS_Tool/source.h";
+        
+//        NSString *sourceFile = @(argv[1]);
         if(![[NSFileManager defaultManager] fileExistsAtPath:sourceFile]) {
             printf("%s 文件不存在\n",argv[1]);
         }
@@ -46,8 +49,11 @@ int main(int argc, const char * argv[]) {
         printf("🔨 预处理source完成,已存放至preprocess.h\n\n");
 
         //配置信息
-        ConfigInfo *configInfo = [ConfigParser parseConfigInfo:sourceFile];
-
+        ConfigInfo *configInfo = [ConfigParser parseConfigInfo:source];
+        //Import 信息
+        NSArray *imports = [ImportParser parseImportInfo:source];
+        [Common configImports:imports];
+        
         //生成模型
         [ModelGenerator generateModels:source configInfo:configInfo outputPath:outputPath];
         //生成Request

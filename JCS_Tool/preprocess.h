@@ -3,6 +3,9 @@ Config{
     "responseModel":"CommonResponse",
     "signalRequest":true
 }
+import.class = Person
+import.lib = Person/Person
+import.lib = Student/Student.h
 message Person {
     desc Person 第一行 注释
     desc Person 第二行 注释

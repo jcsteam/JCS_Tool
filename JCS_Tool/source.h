@@ -4,6 +4,10 @@ Config{
     "signalRequest":true
 }
 
+import.class = Person
+import.lib = Person/Person
+import.lib = Student/Student.h
+
 //message A extends B{
 //
 //}

@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Person/Person.h>
+#import <Student/Student.h>
+#import "Person.h"
+
 
 @class HKUserAboutApp;
 @class HKUserPerson;

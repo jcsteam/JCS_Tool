@@ -41,6 +41,9 @@
     [Common copyRight:filename projectName:filename author:@"" stringBuilder:stringBuilder];
     //引入#import
     [stringBuilder appendString:@"#import <UIKit/UIKit.h>\n"];
+    [Common imports:stringBuilder];
+    [stringBuilder appendString:@"#import \n\n"];
+    
     if(config.signalRequest){
         [stringBuilder appendString:@"#import <ReactiveObjC/ReactiveObjC.h>\n"];
     }

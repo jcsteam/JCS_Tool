@@ -23,6 +23,7 @@
 		7DAE914F241F9A5200C41EDF /* RequestParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE914E241F9A5200C41EDF /* RequestParser.m */; };
 		7DAE9152241F9A7200C41EDF /* RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE9151241F9A7200C41EDF /* RequestInfo.m */; };
 		7DAE915524205F7600C41EDF /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAE915424205F7600C41EDF /* RequestGenerator.m */; };
+		7DE6B50A24288F0100503AF9 /* ImportParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6B50924288F0100503AF9 /* ImportParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +76,8 @@
 		7DAE9151241F9A7200C41EDF /* RequestInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestInfo.m; sourceTree = "<group>"; };
 		7DAE915324205F7600C41EDF /* RequestGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestGenerator.h; sourceTree = "<group>"; };
 		7DAE915424205F7600C41EDF /* RequestGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestGenerator.m; sourceTree = "<group>"; };
+		7DE6B50824288F0100503AF9 /* ImportParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImportParser.h; sourceTree = "<group>"; };
+		7DE6B50924288F0100503AF9 /* ImportParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImportParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +138,8 @@
 			children = (
 				7DA26930241BC29000C1653C /* ConfigParser.h */,
 				7DA26931241BC29000C1653C /* ConfigParser.m */,
+				7DE6B50824288F0100503AF9 /* ImportParser.h */,
+				7DE6B50924288F0100503AF9 /* ImportParser.m */,
 				7DAE9139241F0CB100C41EDF /* CommentParser.h */,
 				7DAE913A241F0CB100C41EDF /* CommentParser.m */,
 				7DAE9142241F207A00C41EDF /* EnumParser.h */,
@@ -257,6 +262,7 @@
 				7DA26916241B8F5000C1653C /* main.m in Sources */,
 				7DAE913B241F0CB100C41EDF /* CommentParser.m in Sources */,
 				7DAE9152241F9A7200C41EDF /* RequestInfo.m in Sources */,
+				7DE6B50A24288F0100503AF9 /* ImportParser.m in Sources */,
 				7DA26939241BC3A100C1653C /* ModelGenerator.m in Sources */,
 				7DAE9144241F207A00C41EDF /* EnumParser.m in Sources */,
 				7DA2692F241BA45F00C1653C /* MessageInfo.m in Sources */,

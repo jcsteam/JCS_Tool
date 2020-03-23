@@ -53,7 +53,10 @@
     //版权信息
     [Common copyRight:filename projectName:filename author:@"" stringBuilder:stringBuilder];
     //引入#import
-    [stringBuilder appendString:@"#import <UIKit/UIKit.h>\n\n"];
+    [stringBuilder appendString:@"#import <UIKit/UIKit.h>\n"];
+    [Common imports:stringBuilder];
+    [stringBuilder appendString:@"\n\n"];
+    
     //@class 声明
     for (MessageInfo *message in models) {
         [stringBuilder appendFormat:@"@class %@;\n",[NSString stringWithFormat:@"%@",message.name]];

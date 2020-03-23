@@ -9,6 +9,8 @@
 #import "Common.h"
 #import "Category.h"
 
+static NSArray *_imports = nil;
+
 @implementation Common
 
 /// 版权信息
@@ -91,6 +93,23 @@
         };
     });
     return _propertyTypeMap;
+}
+
+/// 配置import信息
++ (void)configImports:(NSArray*)imports {
+    _imports = imports;
+}
+/// 拼接import新
++ (void)imports:(NSMutableString*)stringBuilder {
+    if(!_imports){
+        return;
+    }
+    //#import 导入
+    for (NSString *importInfo in _imports) {
+        if(importInfo.jcs_isValid){
+            [stringBuilder appendFormat:@"%@\n",importInfo];
+        }
+    }
 }
 
 @end

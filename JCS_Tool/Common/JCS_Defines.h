@@ -10,6 +10,8 @@
 #define JCS_Defines_h
 
 #define kConfigRegex @"Config(\\s*)\\{([\\s\\S]*?)\\}"
+#define kImportClass @"import.class(?:\\s*)=(?:\\s)(\\S*)(?:\\s*)"
+#define kImportLib @"import.lib(?:\\s*)=(?:\\s)(\\S*)(?:\\s*)"
 
 #define kDescRegex @"(desc)(?:\\s+)([\\s\\S]*)"
 #define kCommentBlockRegex @"\\/\\*(\\s|.)*?\\*\\/"

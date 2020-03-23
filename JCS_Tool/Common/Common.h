@@ -29,6 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///propertyTypeMap
 + (NSDictionary*)propertyTypeMap;
 
+/// 配置import信息
++ (void)configImports:(NSArray*)imports;
+/// 拼接import新
++ (void)imports:(NSMutableString*)stringBuilder;
+
 @end
 
 NS_ASSUME_NONNULL_END
