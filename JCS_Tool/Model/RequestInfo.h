@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MessageInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,7 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *limitClass;
 /** <#备注#> **/
 @property (nonatomic, copy) NSString *url;
-
+/** 参数 **/
+@property (nonatomic, strong) NSArray<MessageProperty*> *params;
 
 @end
 

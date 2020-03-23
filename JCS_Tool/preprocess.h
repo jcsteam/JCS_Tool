@@ -40,6 +40,11 @@ enum CarType {
 }
 request get getBannerList Student2 /getBannerList.action {
     desc 获取用户信息接口-Student2
+    desc 获取用户信息接口-Student2-2
+    desc 获取用户信息接口-Student2-3
+    optional string classNo = nil; //班级号
+    optional int bannerType = nil; //banner号
+    optional CarType carType = 0; //卡车类型
 }
 request get getBannerList2 dict /getBannerList.action {
     desc 获取用户信息接口-dict

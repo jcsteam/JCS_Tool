@@ -12,6 +12,9 @@
 #import "Category.h"
 #import "RequestInfo.h"
 #import "MessageParser.h"
+#import "EnumParser.h"
+
+#import "MessageInfo.h"
 
 #import "JCS_Defines.h"
 
@@ -77,7 +80,7 @@
     //每行进行分割
     NSArray *components = [content componentsSeparatedByString:@"\n"];
     //属性数组
-//    NSMutableArray<EnumProperty*> *properties = [NSMutableArray array];
+    NSMutableArray<MessageProperty*> *properties = [NSMutableArray array];
     //Message备注
     NSMutableString *comment = [NSMutableString string];
     for (NSString *comp in components) {
@@ -91,31 +94,53 @@
                 NSArray *item = list[0];
                 [comment appendFormat:@"  %@\n",item[2]];
             }
+            continue;
         }
-//        //属性
-//        NSArray *list = [comp arrayOfCaptureComponentsMatchedByRegex:kEnumPropertyRegex];
-//        if(list.count > 0){
-//            NSArray *item = list[0];
-//            EnumProperty *property = [[EnumProperty alloc] init];
-//            NSString *oriProperyName = item[1];
-//            property.name = [NSString stringWithFormat:@"%@%@",model.name,oriProperyName.jcs_catpureUpper];
-//            property.value = item[2];
-//            //备注信息
-//            NSString *comment = item[3];
-//            if(comment.jcs_isValid){
-//                list = [comment arrayOfCaptureComponentsMatchedByRegex:kLineCommentRegex];
-//                if(list.count > 0){
-//                    property.comment = list[0][1];
-//                }
-//            }
-//            //对备注进行再次匹配
-//            [properties addObject:property];
-//
-//            _enumPropertiesMap[oriProperyName] = property.name;
-//        }
+
+        //属性
+        if([comp containsString:@"optional "]){
+            NSArray *list = [comp arrayOfCaptureComponentsMatchedByRegex:kMessagePropertyRegex];
+            if(list.count > 0){
+                NSArray *item = list[0];
+                MessageProperty *property = [[MessageProperty alloc] init];
+                property.name = item[3];
+                property.defaultValue = item[4];
+                //类型
+                NSString *type = item[2];
+                property.type = type;
+                
+                //备注信息
+                NSString *comment = item[5];
+                list = [comment arrayOfCaptureComponentsMatchedByRegex:kLineCommentRegex];
+                if(list.count > 0){
+                    property.comment = list[0][1];
+                }
+                [properties addObject:property];
+            }
+        }
     }
+    
+    //类属性
+    for (MessageProperty *property in properties) {
+        if([EnumParser propertyIsEnum:property.type]){ //枚举类型
+            property.isEnum = YES;
+            property.type = [EnumParser transPropertyType:property.type];
+            property.fullTypeString = property.type;
+            
+        } else if([MessageParser propertyIsMessage:property.type]){ //Message类型
+            property.isMessage = YES;
+            property.type = [MessageParser transPropertyType:property.type];
+            property.fullTypeString = [NSString stringWithFormat:@"%@ *",property.type];
+            
+        } else if([Common.propertyTypeMap.allKeys containsObject:property.type]){
+            //属性不能交换，先fullTypeString，再type
+            property.fullTypeString = [Common fullTypeString:property.type];
+            property.type = [Common.propertyTypeMap valueForKey:property.type];
+        }
+    }
+    
     model.comment = [comment stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-//    model.properties = properties;
+    model.params = properties;
 }
 
 @end

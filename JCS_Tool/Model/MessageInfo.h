@@ -26,11 +26,15 @@ NS_ASSUME_NONNULL_BEGIN
 /** 是否是Message类型 **/
 @property (nonatomic, assign) BOOL isMessage;
 
-
 /** 泛型标志1 **/
 @property (nonatomic, copy) NSString *limit1;
 /** 泛型标志2 **/
 @property (nonatomic, copy) NSString *limit2;
+
+/** 完整类型 **/
+@property (nonatomic, copy) NSString *fullTypeString;
+/** 修饰符 **/
+@property (nonatomic, copy) NSString *modifierString;
 
 
 @end

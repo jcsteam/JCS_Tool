@@ -86,32 +86,26 @@
     for (MessageProperty *property in model.properties) {
         //备注
         [stringBuilder appendFormat:@"/** %@ */\n",property.comment];
-        //属性
-        NSString *modifierString = [self modifierString:property.type];
         //FIXME: 泛型暂不支持
 //        if(property.limit1.length > 0 ) { //泛型单独处理
 //            NSString *type = [[self propertyTypeMap] valueForKey:property.type];
 //            if([property.type containsString:@"list"]){ //数组
-//                NSString *limitTypeString = [self typeComponent:property.limit1];
+//                NSString *limitTypeString = [self fullTypeString:property.limit1];
 //                [stringBuilder appendFormat:@"@property (nonatomic, %@) %@<%@> *%@;\n",modifierString,type,limitTypeString,property.name];
 //            } else {
-//                NSString *limitTypeString1 = [self typeComponent:property.limit1];
-//                NSString *limitTypeString2 = [self typeComponent:property.limit2];
+//                NSString *limitTypeString1 = [self fullTypeString:property.limit1];
+//                NSString *limitTypeString2 = [self fullTypeString:property.limit2];
 //                [stringBuilder appendFormat:@"@property (nonatomic, %@) %@<%@,%@> *%@;\n",modifierString,type,limitTypeString1,limitTypeString2,property.name];
 //            }
 //        } else {
-        NSString *typeString = [Common typeComponent:property.type];
-        if(!typeString.jcs_isValid){ //propertyTypeMap未匹配，则为引用类型
-            if(property.isMessage){ //是否是message类型
-                typeString = [NSString stringWithFormat:@"%@ *",property.type];
-                
-            } else if(property.isEnum){
-                modifierString = @"assign";
-                typeString = [NSString stringWithFormat:@"%@ ",property.type];
-            }
-        }
-        [stringBuilder appendFormat:@"@property (nonatomic, %@) %@%@;\n",modifierString,typeString,property.name];
+//        [stringBuilder appendFormat:@"@property (nonatomic, %@) %@ %@;\n",property.modifierString,property.fullTypeString,property.name];
 //        }
+        
+        NSString *propertyNameSeparator = @" ";
+        if([property.fullTypeString hasSuffix:@"*"]){
+            propertyNameSeparator = @""; //指针类型 *号后面不要加空格
+        }
+        [stringBuilder appendFormat:@"@property (nonatomic, %@) %@%@%@;\n",property.modifierString,property.fullTypeString,propertyNameSeparator,property.name];
     }
     
     [stringBuilder appendString:@"@end\n\n\n"];
@@ -155,21 +149,5 @@
     [stringBuilder appendString:@"@end\n\n\n"];
 
 }
-
-
-/// 修复符
-+ (NSString*)modifierString:(NSString*)typeString {
-    NSString *type = [[Common propertyTypeMap] valueForKey:typeString];
-    if([type isEqualToString:@"NSString"]) { return @"copy";}
-    else if([type isEqualToString:@"NSMutableArray"]) { return @"strong";}
-    else if([type isEqualToString:@"NSMutableDictionary"]) { return @"strong";}
-    else if([type isEqualToString:@"NSInteger"]) { return @"assign";}
-    else if([type isEqualToString:@"CGFloat"]) { return @"assign";}
-    else if([type isEqualToString:@"double"]) { return @"assign";}
-    else if([type isEqualToString:@"BOOL"]) { return @"assign";}
-    else if([type isEqualToString:@"double"]) { return @"assign";}
-    return @"strong";
-}
-
 
 @end

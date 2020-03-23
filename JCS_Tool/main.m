@@ -29,14 +29,12 @@ int main(int argc, const char * argv[]) {
 //            return 0;
 //        }
         
-        NSString *sourceFile = @"/Users/yongping/Documents/Pod库/JCS_Tool/JCS_Tool/source.h";
-        
-//        NSString *sourceFile = @(argv[1]);
+        NSString *sourceFile = @"/Users/yongping/Documents/Pod库/JCS_Tool/JCS_Tool/source.h";//@(argv[1]);
         if(![[NSFileManager defaultManager] fileExistsAtPath:sourceFile]) {
             printf("%s 文件不存在\n",argv[1]);
         }
         
-        NSString *outputPath = [sourceFile stringByDeletingLastPathComponent];
+        NSString *outputPath = @"/Users/yongping/Documents/Pod库/JCS_Test/JCS_Test";//[sourceFile stringByDeletingLastPathComponent];
         NSString *preprocessFile = [outputPath stringByAppendingPathComponent:@"preprocess.h"];
 
         //解析之前，先删除(整行注释、空行、*号注释)

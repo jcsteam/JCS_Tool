@@ -5,8 +5,9 @@ Config{
 }
 
 import.class = Person
-import.lib = Person/Person
-import.lib = Student/Student.h
+import.class = Dog
+//import.lib = Person/Person
+//import.lib = Student/Student.h
 
 //message A extends B{
 //
@@ -41,6 +42,7 @@ message Person {
     optional Person person = nil;
     optional CarType carType = bieke; //我有一辆汽车
     optional Sex sex = male;
+    optional Dog dog = nil; //宠物
 //    optional Object obj = nil;
 }
 
@@ -91,6 +93,11 @@ enum CarType {
 
 request get getBannerList Student2 /getBannerList.action {
     desc 获取用户信息接口-Student2
+    desc 获取用户信息接口-Student2-2
+    desc 获取用户信息接口-Student2-3
+    optional string classNo = nil; //班级号
+    optional int bannerType = nil; //banner号
+    optional CarType carType = 0; //卡车类型
 }
 
 request get getBannerList2 dict /getBannerList.action {

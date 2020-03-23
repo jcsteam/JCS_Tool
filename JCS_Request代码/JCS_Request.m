@@ -31,6 +31,11 @@
     return instance;
 }
 
+/// 获取BaseUrl
++ (NSString*)getBaseUrl {
+    return kBaseUrl;
+}
+
 /// 参数加密
 + (NSDictionary*)preprocessParams:(NSDictionary*)params {
     return params;

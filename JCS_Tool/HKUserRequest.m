@@ -14,6 +14,8 @@
 @implementation HKUserRequest : NSObject
 /**
   获取用户信息接口-Student2
+  获取用户信息接口-Student2-2
+  获取用户信息接口-Student2-3
  */
 + (void)requestGetBannerListWithHub:(BOOL)hub params:(NSDictionary *)params success:(void(^)(CommonResponse *result,HKUserStudent2 *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure { 
     if(hub){ 

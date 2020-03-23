@@ -59,21 +59,41 @@ static NSArray *_imports = nil;
 }
 
 /// 获取类型部分字符串
-+ (NSString *)typeComponent:(NSString*)typeString {
-    NSString *type = [[self propertyTypeMap] valueForKey:typeString];
++ (NSString *)fullTypeString:(NSString*)typeAlias {
+    NSString *type = [[self propertyTypeMap] valueForKey:typeAlias];
     if([type isEqualToString:@"NSString"]) { return @"NSString *";}
     if([type isEqualToString:@"NSMutableString"]) { return @"NSMutableString *";}
     else if([type isEqualToString:@"NSArray"]) { return @"NSArray *";}
     else if([type isEqualToString:@"NSMutableArray"]) { return @"NSMutableArray *";}
     else if([type isEqualToString:@"NSArray"]) { return @"NSArray *";}
     else if([type isEqualToString:@"NSMutableDictionary"]) { return @"NSMutableDictionary *";}
-    else if([type isEqualToString:@"NSInteger"]) { return @"NSInteger ";}
-    else if([type isEqualToString:@"CGFloat"]) { return @"CGFloat ";}
-    else if([type isEqualToString:@"double"]) { return @"double ";}
-    else if([type isEqualToString:@"BOOL"]) { return @"BOOL ";}
-    else if([type isEqualToString:@"double"]) { return @"double ";}
-    return @"";
+    else if([type isEqualToString:@"NSInteger"]
+            || [type isEqualToString:@"CGFloat"]
+            || [type isEqualToString:@"double"]
+            || [type isEqualToString:@"BOOL"]
+            || [type isEqualToString:@"double"]) { return type;}
+    return [NSString stringWithFormat:@"%@ *",typeAlias];
 }
+
+/// 获取类型部分修饰符
++ (NSString *)modifierString:(NSString*)typeAlias {
+    NSString *type = [[self propertyTypeMap] valueForKey:typeAlias];
+    if([type isEqualToString:@"NSString"]
+       || [type isEqualToString:@"NSMutableString"]
+       || [type isEqualToString:@"NSArray"]
+       || [type isEqualToString:@"NSMutableArray"]
+       || [type isEqualToString:@"NSArray"]
+       || [type isEqualToString:@"NSMutableDictionary"]) { return @"strong";}
+    else if([type isEqualToString:@"NSInteger"]
+            || [type isEqualToString:@"CGFloat"]
+            || [type isEqualToString:@"double"]
+            || [type isEqualToString:@"BOOL"]
+            || [type isEqualToString:@"double"]) { return @"assign";}
+    
+    return @"strong";
+}
+
+
 ///propertyTypeMap
 + (NSDictionary*)propertyTypeMap {
     static NSDictionary *_propertyTypeMap = nil;

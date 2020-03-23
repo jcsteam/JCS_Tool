@@ -25,7 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)typeIsArray:(NSString*)type;
 
 /// 获取类型部分字符串
-+ (NSString *)typeComponent:(NSString*)typeString;
++ (NSString *)fullTypeString:(NSString*)typeAlias;
+/// 获取类型部分修饰符
++ (NSString *)modifierString:(NSString*)typeAlias;
 ///propertyTypeMap
 + (NSDictionary*)propertyTypeMap;
 

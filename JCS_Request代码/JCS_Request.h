@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
+/// 获取BaseUrl
++ (NSString*)getBaseUrl;
+
 /// 对参数进行预处理
 + (NSDictionary*)preprocessParams:(NSDictionary*)params;
 /// 返回data属性

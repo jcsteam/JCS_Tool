@@ -8,11 +8,14 @@
 
 #import "MessageParser.h"
 #import "RegexKitLite.h"
-#import "MessageInfo.h"
-#import "EnumParser.h"
-#import "Category.h"
 
 #import "JCS_Defines.h"
+#import "Common.h"
+#import "Category.h"
+
+#import "MessageInfo.h"
+
+#import "EnumParser.h"
 
 static NSMutableDictionary *_messageNameMap = nil;
 
@@ -149,14 +152,28 @@ static NSMutableDictionary *_messageNameMap = nil;
         
         //类属性
         for (MessageProperty *property in messageInfo.properties) {
+            
             if([EnumParser propertyIsEnum:property.type]){ //枚举类型
                 property.isEnum = YES;
                 property.type = [EnumParser transPropertyType:property.type];
                 property.defaultValue = [EnumParser transPropertyValue:property.defaultValue];
+                property.modifierString = @"assign";
+                property.fullTypeString = property.type;
                 
             } else if([self propertyIsMessage:property.type]){ //Message类型
                 property.isMessage = YES;
                 property.type = [self transPropertyType:property.type];
+                property.modifierString = @"strong";
+                property.fullTypeString = [NSString stringWithFormat:@"%@ *",property.type];
+                
+            } else if([Common.propertyTypeMap.allKeys containsObject:property.type]){ //
+                property.modifierString = [Common modifierString:property.type];
+                property.fullTypeString = [Common fullTypeString:property.type];
+                property.type = [Common.propertyTypeMap valueForKey:property.type];
+                
+            } else { //未识别，都当指针处理
+                property.modifierString = @"strong";
+                property.fullTypeString = [NSString stringWithFormat:@"%@ *",property.type];
             }
         }
     }
