@@ -3,88 +3,13 @@
 [toc]
 
 目录
-<ul>
-<li>
-<a href="#toc_0">JCS_Tool</a>
-<ul>
-<li>
-<a href="#toc_1">介绍</a>
-</li>
-<li>
-<a href="#toc_2">初体验</a>
-</li>
-<li>
-<a href="#toc_3">配置信息</a>
-<ul>
-<li>
-<a href="#toc_4">配置</a>
-</li>
-<li>
-<a href="#toc_5">prefix</a>
-</li>
-<li>
-<a href="#toc_6">responseModel</a>
-</li>
-<li>
-<a href="#toc_7">signalRequest</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_8">import</a>
-</li>
-<li>
-<a href="#toc_9">枚举</a>
-</li>
-<li>
-<a href="#toc_10">模型</a>
-<ul>
-<li>
-<a href="#toc_11">语法</a>
-</li>
-<li>
-<a href="#toc_12">类型</a>
-</li>
-<li>
-<a href="#toc_13">简单类型</a>
-</li>
-<li>
-<a href="#toc_14">枚举类型</a>
-</li>
-<li>
-<a href="#toc_15">内部Model</a>
-</li>
-<li>
-<a href="#toc_16">外部Model</a>
-</li>
-<li>
-<a href="#toc_17">其他</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_18">模型继承</a>
-</li>
-<li>
-<a href="#toc_19">接口方法</a>
-<ul>
-<li>
-<a href="#toc_20">响应内容解析</a>
-</li>
-<li>
-<a href="#toc_21">JCS_Request</a>
-</li>
-<li>
-<a href="#配置语法">配置语法</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<a href="#Author">Author</a>
-</li>
-</ul>
+* [介绍](#介绍)
+* [初体验](#初体验)
+* [配置信息](#配置信息)
+    * [配置](#配置)
+    * [prefix](#prefix)
+    * [responseModel](#responseModel)
+* [Author](#Author)
 
 ## 介绍
 
