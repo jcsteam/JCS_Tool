@@ -75,14 +75,14 @@
 <a href="#toc_21">JCS_Request</a>
 </li>
 <li>
-<a href="#toc_22">配置语法</a>
+<a href="#配置语法">配置语法</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_23">Author</a>
+<a href="#Author">Author</a>
 </li>
 </ul>
 
