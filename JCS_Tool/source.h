@@ -4,8 +4,8 @@ Config{
     "signalRequest":true
 }
 
-import.class = Person
-import.class = Dog
+//import.class = Person
+import.class = Animal
 //import.lib = Person/Person
 //import.lib = Student/Student.h
 
@@ -33,6 +33,10 @@ import.class = Dog
 //message D{
 //
 //}
+
+message Dog extends Animal {
+    
+}
 
 message Person {
     desc Person 第一行 注释

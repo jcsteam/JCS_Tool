@@ -134,25 +134,35 @@ static NSMutableDictionary *_messageNameMap = nil;
 + (NSMutableArray*)postHandleMap:(NSMutableDictionary*)map configInfo:(ConfigInfo*)configInfo{
     
     _messageNameMap = [NSMutableDictionary dictionary];
-    //前缀添加、属性引用、super替换
+    
+    //前缀添加
     for (NSString *key in map.allKeys) {
         MessageInfo *messageInfo = [map valueForKey:key];
         //Key替换
         NSString *newKey = [NSString stringWithFormat:@"%@%@",configInfo.prefix,key];
-        map[newKey] = messageInfo;
         messageInfo.name = newKey;
+        map[newKey] = messageInfo;
         //移除老Key
         [map removeObjectForKey:key];
-        //super Class
-        if(![messageInfo.superType isEqualToString:@"NSObject"]){
-            messageInfo.superType = [NSString stringWithFormat:@"%@%@",configInfo.prefix,messageInfo.superType];
-        }
         //Key map存储
         _messageNameMap[key] = newKey;
-        
+    }
+
+    // super 替换
+    for (NSString *key in map.allKeys) {
+        MessageInfo *messageInfo = [map valueForKey:key];
+        if(![messageInfo.superType isEqualToString:@"NSObject"]){
+            if([self propertyIsMessage:messageInfo.superType]){
+                messageInfo.superType = [NSString stringWithFormat:@"%@%@",configInfo.prefix,messageInfo.superType];
+            }
+        }
+    }
+    
+    //属性引用
+    for (NSString *key in map.allKeys) {
+        MessageInfo *messageInfo = [map valueForKey:key];
         //类属性
         for (MessageProperty *property in messageInfo.properties) {
-            
             if([EnumParser propertyIsEnum:property.type]){ //枚举类型
                 property.isEnum = YES;
                 property.type = [EnumParser transPropertyType:property.type];
@@ -184,11 +194,15 @@ static NSMutableDictionary *_messageNameMap = nil;
         if([info.superType isEqualToString:@"NSObject"]){
             info.extendsLevel = 0;
         } else {
-            MessageInfo *superClass = map[info.superType];
             NSInteger level = 1;
-            while (![superClass.superType isEqualToString:@"NSObject"]) {
-                level++;
-                superClass = map[superClass.superType];
+            if([map valueForKey:info.superType]){
+                MessageInfo *superClass = map[info.superType];
+                while (![superClass.superType isEqualToString:@"NSObject"]) {
+                    level++;
+                    superClass = map[superClass.superType];
+                }
+            } else {
+                //外部Model作为superClass
             }
             info.extendsLevel = level;
         }
