@@ -463,7 +463,279 @@ message Student extends Person {
 @end
 ```
 
-**父类目前仅支持内部Model**
+**父类同时支持内部Model和外部Model**
 
 ## 接口方法
 
+JCS_Tool生成的接口方法，需要依赖JCS_Reqeust类，JCS_Request源码在项目根目录下。
+
+### 响应内容解析
+
+JCS_Tool需要一个辅助Model来解析服务器响应内容。
+
+若服务端响应内容格式是这样的
+```
+{
+    code:1000,
+    msg:"成功",
+    success:true,
+    data:....
+}
+```
+
+那么需要定一个的解析Model，名称可以自己指定
+
+```
+@interface CommonResponse : NSObject
+
+@property (nonatomic, assign) BOOL success;
+@property (nonatomic, copy) NSString *code;
+@property (nonatomic, copy) NSString *msg;
+
+@end
+```
+
+将CommonResponse配置在Config对象中
+
+```
+Config{
+    ......
+    "responseModel":"CommonResponse",
+    ......
+}
+```
+
+
+### JCS_Request
+
+JCS_Tool需要依赖一个JCS_Request的网络请求对象，名称目前不可自行指定。JCS_Request相关源码在项目根目录中。
+
+JCS_Request需要实现方法说明
+
+```
+
+@interface JCS_Request : AFHTTPSessionManager
+
+/// 获取BaseUrl
++ (NSString*)getBaseUrl;
+
+/// 对参数进行预处理，如加密、添加公共参数等。无特殊操作则直接 return params;
++ (NSDictionary*)preprocessParams:(NSDictionary*)params;
+
+/// 返回响应中的data属性
+/// 例如服务端响应内容如下
+/// {
+///     code:10000,
+///     msg:"成功",
+///     success:true,
+///     data:{}
+/// }
+/// 则在该方法中 return [requestParams valueForKey:@"data"];
++ (id)dataInResponse:(NSDictionary*)response url:(NSString*)url requestParams:(NSDictionary*)requestParams;
+
+/// 请求错误时，该方法会被调用，自行处理错误逻辑
++ (void)errorRequest:(NSError*)error url:(NSString*)url requestParams:(NSDictionary*)requestParams;
+
+
+/// 菊花显示与隐藏
++ (void)showQueryHub;
++ (void)showRequestErrorHub:(NSError*)error;
++ (void)hideRequestHub;
+
+@end
+```
+
+### 配置语法
+```
+request ${请求Method} ${生成方法名} ${响应data类型} ${请求连接} {
+    desc ${生成方法备注}
+    optional 参数类型 参数名1; //参数备注1
+    optional 参数类型 参数名2; //参数备注2
+}
+```
+
+* 请求Method为两种POST、GET。
+* 生成方法名自行指定，符合命名规则即可。
+* 响应data类型，已支持下面几种类型
+    * nil -> nil将被解析为NSDictionary类型
+    * dict -> NSDictionary
+    * list -> NSArray
+    * list<内部Person> -> NSArray<前缀+Person>
+    * list<外部部Person> -> NSArray<原样Person>
+    * Person -> 内部Model(前缀+Person)
+    * Person -> 外部Model(原样替换)
+
+具体示例
+```
+//get方式请求用户信息，data类型为NSDictionary
+request get getUserInfo1 nil /getUserInfo.action {
+    desc 获取用户信息接
+    optional int userId; // 用户ID
+}
+
+//post方式请求用户信息，data类型为Person
+request get getUserInfo2 Person /getUserInfo.action { }
+
+// post方式获取用户列表，data类型为NSArray
+request post getUserList1 list /getUserList.action {}
+
+// post方式获取用户列表，data类型为NSArray<Person>
+request post getUserList2 list<Person> /getUserList.action {}
+```
+
+上面配置内容将生成下面的一系列方法(为了方便阅读，下面内容是删除了相关注释后的内容)
+
+```
+@interface HKUserRequest : NSObject
+
+#pragma mark - getUserInfo1
+
++ (void)requestGetUserInfo1WithHub:(BOOL)hub params:(NSDictionary *)params success:(void(^)(CommonResponse *result,NSDictionary *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
++ (void)requestGetUserInfo1WithHub:(BOOL)hub userId:(NSInteger)userId  success:(void(^)(CommonResponse *result,NSDictionary *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
+
+#pragma mark - getUserInfo2
+
++ (void)requestGetUserInfo2WithHub:(BOOL)hub params:(NSDictionary *)params success:(void(^)(CommonResponse *result,HKUserPerson *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
++ (void)requestGetUserInfo2WithHub:(BOOL)hub  success:(void(^)(CommonResponse *result,HKUserPerson *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
+
+#pragma mark - getUserList1
+
++ (void)requestGetUserList1WithHub:(BOOL)hub params:(NSDictionary *)params success:(void(^)(CommonResponse *result,NSArray *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
++ (void)requestGetUserList1WithHub:(BOOL)hub  success:(void(^)(CommonResponse *result,NSArray *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
+
+#pragma mark - getUserList2
+
++ (void)requestGetUserList2WithHub:(BOOL)hub params:(NSDictionary *)params success:(void(^)(CommonResponse *result,NSArray<HKUserPerson *> *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
++ (void)requestGetUserList2WithHub:(BOOL)hub  success:(void(^)(CommonResponse *result,NSArray<HKUserPerson *> *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure;
+
+@end
+```
+
+调用方式
+
+```
+//获取用户信息，传入NSDictionary,返回值NSDictionary
+[HKUserRequest requestGetUserInfo1WithHub:YES params:@{@"userId":@1} success:^(CommonResponse *result, NSDictionary *data, NSDictionary *originResponse) {
+    if(result.success){
+        //请求成功，使用data进行业务处理
+    } else {
+        //请求失败
+        NSString *msg = result.msg;
+    }
+} failure:^(NSError *error) {
+    //请求失败
+}];
+    
+//获取用户信息，直接传入userId,返回值NSDictionary
+[HKUserRequest requestGetUserInfo1WithHub:YES userId:1 success:^(CommonResponse *result, NSDictionary *data, NSDictionary *originResponse) {
+    
+} failure:^(NSError *error) {
+    
+}];
+    
+//获取用户信息，传入NSDictionary,返回值HKUserPerson
+[HKUserRequest requestGetUserInfo2WithHub:YES params:@{@"userId":@1} success:^(CommonResponse *result, HKUserPerson *data, NSDictionary *originResponse) {
+    
+} failure:^(NSError *error) {
+    
+}];
+    
+// 获取用户列表，参数NSDictionary, 返回NSDictionary
+[HKUserRequest requestGetUserList1WithHub:YES params:nil success:^(CommonResponse *result, NSArray *data, NSDictionary *originResponse) {
+    
+} failure:^(NSError *error) {
+    
+}];
+    
+// 获取用户列表，参数NSDictionary, 返回NSArray<HKUserPerson *>
+[HKUserRequest requestGetUserList2WithHub:YES params:nil success:^(CommonResponse *result, NSArray<HKUserPerson *> *data, NSDictionary *originResponse) {
+    
+} failure:^(NSError *error) {
+    
+}];
+```
+
+有时会需要多个接口全部响应完成后再做业务处理，JCS_Tool为这样的需求做了兼容，为每个接口都生成返回RACSignal的方法，**该功能需要ReactiveObjC支持**。需要在Config中添加如下配置
+
+```
+Config{
+    ......
+    "signalRequest":true,
+    ......
+}
+```
+配置内容无需改动，生成的方法会多出下面的方法
+
+```
+@interface HKUserRequest : NSObject
+
+#pragma mark - getUserInfo1
+
++ (RACSignal*)requestGetUserInfo1WithHub:(BOOL)hub params:(NSDictionary *)params;
++ (RACSignal*)requestGetUserInfo1WithHub:(BOOL)hub userId:(NSInteger)userId ;
+
+#pragma mark - getUserInfo2
+
++ (RACSignal*)requestGetUserInfo2WithHub:(BOOL)hub params:(NSDictionary *)params;
++ (RACSignal*)requestGetUserInfo2WithHub:(BOOL)hub ;
+
+#pragma mark - getUserList1
+
++ (RACSignal*)requestGetUserList1WithHub:(BOOL)hub params:(NSDictionary *)params;
++ (RACSignal*)requestGetUserList1WithHub:(BOOL)hub ;
+
+#pragma mark - getUserList2
+
++ (RACSignal*)requestGetUserList2WithHub:(BOOL)hub params:(NSDictionary *)params;
++ (RACSignal*)requestGetUserList2WithHub:(BOOL)hub ;
+
+@end
+```
+
+调用方法，下面要求用户数据和用户列表数据全部处理完成后在进行业务处理为例
+```
+@weakify(self)
+[[RACSignal combineLatest:@[
+    [HKUserRequest requestGetUserInfo2WithHub:NO], //获取用户信息
+    [HKUserRequest requestGetUserList2WithHub:NO] //获取用户列表
+    
+] reduce:^id(NSDictionary *userInfo,NSDictionary *userlist){
+    
+    /**
+     若返回正常，则userInfo格式为
+     @{
+        @"result":result, //响应解析类型对象
+        @"data":data,  //data属性
+        @"originResponse":originResponse //响应原始数据
+     }
+     
+     若响应失败，则userInfo是一个NSError对象
+     */
+    
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    
+    //用户信息
+    if([userInfo isKindOfClass:NSDictionary.class]){
+        data[@"userInfo"] = [userInfo valueForKey:@"data"];
+    }
+    
+    //用户列表
+    if([userlist isKindOfClass:NSDictionary.class]){
+        data[@"userlist"] = [userlist valueForKey:@"data"];
+    }
+    
+    return data;
+    
+}] subscribeNext:^(NSDictionary *data) {
+    @strongify(self)
+    
+    HKUserPerson *userInfo = [data valueForKey:@"userInfo"];
+    NSArray<HKUserPerson*> *userlist = [data valueForKey:@"userlist"];
+    
+    //TODO: 这里拿到接口请求的数据进行业务处理
+}];
+```
+
+# Author
+
+devjackcat@163.com

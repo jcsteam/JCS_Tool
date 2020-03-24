@@ -264,10 +264,10 @@
 + (void)requestMethodComment1:(NSString*)comment stringBuilder:(NSMutableString*)stringBuilder{
     [stringBuilder appendString:@"\n\n/**\n"];
     [stringBuilder appendFormat:@"  %@\n\n",comment?:@""];
-    [stringBuilder appendFormat:@"  @params hub 是否转菊花 \n"];
-    [stringBuilder appendFormat:@"  @params params 请求参数 \n"];
-    [stringBuilder appendFormat:@"  @params success 成功回调 \n"];
-    [stringBuilder appendFormat:@"  @params failure 失败回调 \n"];
+    [stringBuilder appendFormat:@"  @param hub 是否转菊花 \n"];
+    [stringBuilder appendFormat:@"  @param params 请求参数 \n"];
+    [stringBuilder appendFormat:@"  @param success 成功回调 \n"];
+    [stringBuilder appendFormat:@"  @param failure 失败回调 \n"];
     [stringBuilder appendString:@" */\n"];
 }
 ///注释：hub、自定义参数、success、failure
@@ -276,12 +276,12 @@
                        stringBuilder:(NSMutableString*)stringBuilder{
     [stringBuilder appendString:@"\n\n/**\n"];
     [stringBuilder appendFormat:@"  %@\n\n",comment?:@""];
-    [stringBuilder appendFormat:@"  @params hub 是否转菊花 \n"];
+    [stringBuilder appendFormat:@"  @param hub 是否转菊花 \n"];
     for (MessageProperty *property in params) {
-        [stringBuilder appendFormat:@"  @params %@ %@ \n",property.name,property.comment];
+        [stringBuilder appendFormat:@"  @param %@ %@ \n",property.name,property.comment];
     }
-    [stringBuilder appendFormat:@"  @params success 成功回调 \n"];
-    [stringBuilder appendFormat:@"  @params failure 失败回调 \n"];
+    [stringBuilder appendFormat:@"  @param success 成功回调 \n"];
+    [stringBuilder appendFormat:@"  @param failure 失败回调 \n"];
     [stringBuilder appendString:@" */\n"];
 }
 
@@ -289,8 +289,8 @@
 + (void)requestMethodComment2:(NSString*)comment stringBuilder:(NSMutableString*)stringBuilder{
     [stringBuilder appendString:@"\n\n/**\n"];
     [stringBuilder appendFormat:@"  %@\n\n",comment?:@""];
-    [stringBuilder appendFormat:@"  @params hub 是否转菊花 \n"];
-    [stringBuilder appendFormat:@"  @params params 请求参数 \n"];
+    [stringBuilder appendFormat:@"  @param hub 是否转菊花 \n"];
+    [stringBuilder appendFormat:@"  @param params 请求参数 \n"];
     [stringBuilder appendFormat:@"  @return RACSignal \n"];
     [stringBuilder appendString:@" */\n"];
 }
@@ -300,9 +300,9 @@
                        stringBuilder:(NSMutableString*)stringBuilder{
     [stringBuilder appendString:@"\n\n/**\n"];
     [stringBuilder appendFormat:@"  %@\n\n",comment?:@""];
-    [stringBuilder appendFormat:@"  @params hub 是否转菊花 \n"];
+    [stringBuilder appendFormat:@"  @param hub 是否转菊花 \n"];
     for (MessageProperty *property in params) {
-        [stringBuilder appendFormat:@"  @params %@ %@ \n",property.name,property.comment];
+        [stringBuilder appendFormat:@"  @param %@ %@ \n",property.name,property.comment];
     }
     [stringBuilder appendFormat:@"  @return RACSignal \n"];
     [stringBuilder appendString:@" */\n"];
@@ -313,9 +313,9 @@
 /**
  获取参数签名：void requestXXXWithHub:params:success:failure:
  
- @params name 接口名称
- @params responseModel response解析类型
- @params dataClass success中data类型
+ @param name 接口名称
+ @param responseModel response解析类型
+ @param dataClass success中data类型
  */
 + (NSString*)requestMethodSignature1:(NSString*)name responseModel:(NSString*)responseModel dataClass:(NSString*)dataClass{
     return [NSString stringWithFormat:@"+ (void)request%@WithHub:(BOOL)hub params:(NSDictionary *)params success:(void(^)(%@ *result,%@ *data,NSDictionary *originResponse))success failure:(void(^)(NSError*error))failure",name,responseModel,dataClass];

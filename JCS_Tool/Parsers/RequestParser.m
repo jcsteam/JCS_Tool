@@ -99,18 +99,16 @@
 
         //属性
         if([comp containsString:@"optional "]){
-            NSArray *list = [comp arrayOfCaptureComponentsMatchedByRegex:kMessagePropertyRegex];
+            NSArray *list = [comp arrayOfCaptureComponentsMatchedByRegex:kRequestParamsRegex];
             if(list.count > 0){
                 NSArray *item = list[0];
                 MessageProperty *property = [[MessageProperty alloc] init];
                 property.name = item[3];
-                property.defaultValue = item[4];
                 //类型
                 NSString *type = item[2];
                 property.type = type;
-                
                 //备注信息
-                NSString *comment = item[5];
+                NSString *comment = item[4];
                 list = [comment arrayOfCaptureComponentsMatchedByRegex:kLineCommentRegex];
                 if(list.count > 0){
                     property.comment = list[0][1];
